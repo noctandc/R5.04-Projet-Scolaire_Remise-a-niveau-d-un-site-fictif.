@@ -1,8 +1,9 @@
-const initDatabase = (db) => {
+const initDatabase = (database) => {
   return new Promise((resolve, reject) => {
-    db.serialize(() => {
+    database.serialize(() => {
       // Create Users table
-      db.run(`
+      database.run(
+        `
         CREATE TABLE IF NOT EXISTS users (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           firstname TEXT,
@@ -12,15 +13,18 @@ const initDatabase = (db) => {
           created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
           updated_at DATETIME
         )
-      `, (err) => {
-        if (err) {
-          console.error('Error creating users table:', err);
-          reject(err);
+      `,
+        (error) => {
+          if (error) {
+            console.error('Error creating users table:', error);
+            reject(error);
+          }
         }
-      });
+      );
 
       // Create Products table
-      db.run(`
+      database.run(
+        `
         CREATE TABLE IF NOT EXISTS products (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           name TEXT NOT NULL,
@@ -29,18 +33,20 @@ const initDatabase = (db) => {
           created_at DATETIME DEFAULT (datetime('now')),
           updated_at DATETIME
         )
-      `, (err) => {
-        if (err) {
-          console.error('Error creating products table:', err);
-          reject(err);
+      `,
+        (error) => {
+          if (error) {
+            console.error('Error creating products table:', error);
+            reject(error);
+          }
         }
-      });
+      );
 
       // Add sample data if tables are empty
-      db.get('SELECT COUNT(*) as count FROM users', [], (err, result) => {
-        if (err) {
-          console.error('Error checking users:', err);
-          reject(err);
+      database.get('SELECT COUNT(*) as count FROM users', [], (error, result) => {
+        if (error) {
+          console.error('Error checking users:', error);
+          reject(error);
           return;
         }
 
@@ -48,24 +54,26 @@ const initDatabase = (db) => {
           const bcrypt = require('bcryptjs');
           const hashedPassword = bcrypt.hashSync('admin123', 8);
 
-          db.run(`
+          database.run(
+            `
             INSERT INTO users (firstname, lastname, username, password)
             VALUES (?, ?, ?, ?)
           `,
-              ['Admin', 'User', 'admin', hashedPassword],
-              (err) => {
-                if (err) {
-                  console.error('Error creating admin user:', err);
-                  reject(err);
-                }
-              });
+            ['Admin', 'User', 'admin', hashedPassword],
+            (error) => {
+              if (error) {
+                console.error('Error creating admin user:', error);
+                reject(error);
+              }
+            }
+          );
         }
       });
 
-      db.get('SELECT COUNT(*) as count FROM products', [], (err, result) => {
-        if (err) {
-          console.error('Error checking products:', err);
-          reject(err);
+      database.get('SELECT COUNT(*) as count FROM products', [], (error, result) => {
+        if (error) {
+          console.error('Error checking products:', error);
+          reject(error);
           return;
         }
 
@@ -76,15 +84,11 @@ const initDatabase = (db) => {
             ['Headphones', 79.99, 20]
           ];
 
-          sampleProducts.forEach(([name, price, stock]) => {
-            db.run(
-                'INSERT INTO products (name, price, stock) VALUES (?, ?, ?)',
-                [name, price, stock],
-                (err) => {
-                  if (err) console.error('Error inserting product:', name, err);
-                }
-            );
-          });
+          for (const [name, price, stock] of sampleProducts) {
+            database.run('INSERT INTO products (name, price, stock) VALUES (?, ?, ?)', [name, price, stock], (error) => {
+              if (error) console.error('Error inserting product:', name, error);
+            });
+          }
         }
       });
 

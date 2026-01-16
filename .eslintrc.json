@@ -22,6 +22,10 @@
         "browser": true,
         "node": false
       },
+      "globals": {
+        "process": "readonly",
+        "module": "readonly"
+      },
       "extends": [
         "plugin:react/recommended",
         "plugin:react-hooks/recommended",
