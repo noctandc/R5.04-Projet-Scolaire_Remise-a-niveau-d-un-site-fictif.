@@ -77,7 +77,7 @@ Remember to make Prettier and ESLint work together!
 
 - [Fait] Install and configure Husky
 - [Fait] Configure lint-staged
-- [ ] Implement pre-commit hooks:
+- [Fait] Implement pre-commit hooks:
   - Run ESLint
   - Run Prettier
   - Run Jest tests related to changed files
@@ -87,18 +87,18 @@ Remember to make Prettier and ESLint work together!
 
 ### 3. Testing Implementation
 
-- [ ] Configure Jest for both packages
-- [ ] Implement test coverage reporting with minimum thresholds:
+- [Fait] Configure Jest for both packages
+- [En cours] Implement test coverage reporting with minimum thresholds:
   - Statements: 80%
   - Branches: 60%
   - Functions: 70%
   - Lines: 80%
-- [ ] Frontend Tests:
+- [En cours] Frontend Tests:
   - Unit tests for all components
   - Integration tests for forms
   - Mock API calls
   - Test authentication flow
-- [ ] Backend Tests:
+- [En cours] Backend Tests:
   - Unit tests for controllers
   - Integration tests for API endpoints
   - Database operation tests
