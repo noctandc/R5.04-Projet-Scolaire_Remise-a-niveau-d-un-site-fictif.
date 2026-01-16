@@ -1,19 +1,20 @@
 const sqlite3 = require('sqlite3').verbose();
-const path = require('path');
+const path = require('node:path');
+
 const initDatabase = require('./migrations/init');
 
-let db = null;
+let database;
 
 const DB_PATH = path.join(__dirname, '..', 'database.sqlite');
 
 const connect = async () => {
-  if (db) {
-    return db;
+  if (database) {
+    return database;
   }
 
   return new Promise((resolve, reject) => {
     try {
-      const fs = require('fs');
+      const fs = require('node:fs');
 
       if (fs.existsSync(DB_PATH)) {
         const stats = fs.statSync(DB_PATH);
@@ -23,54 +24,53 @@ const connect = async () => {
         console.log('Files in db directory:', files.length);
       }
 
-      db = new sqlite3.Database(DB_PATH, async (err) => {
-        if (err) {
-          console.error('Error connecting to database:', err);
-          reject(err);
+      database = new sqlite3.Database(DB_PATH, async (error) => {
+        if (error) {
+          console.error('Error connecting to database:', error);
+          reject(error);
           return;
         }
 
         console.log('Connected to SQLite database');
 
         try {
-          await initDatabase(db);
+          await initDatabase(database);
           console.log('Database initialized');
-          resolve(db);
-        } catch (initErr) {
-          console.error('Error initializing database:', initErr);
-          reject(initErr);
+          resolve(database);
+        } catch (error) {
+          console.error('Error initializing database:', error);
+          reject(error);
         }
       });
-
-    } catch (err) {
-      console.error('Failed to create database connection:', err);
-      reject(err);
+    } catch (error) {
+      console.error('Failed to create database connection:', error);
+      reject(error);
     }
   });
 };
 
 // Get database instance - throws error if not connected
-const getDb = () => {
-  if (!db) {
+const getDatabase = () => {
+  if (!database) {
     throw new Error('Database not connected. Call connect() first.');
   }
-  return db;
+  return database;
 };
 
 const closeConnection = () => {
   return new Promise((resolve, reject) => {
-    if (!db) {
+    if (!database) {
       resolve();
       return;
     }
 
-    db.close((err) => {
-      if (err) {
-        console.error('Error closing database:', err);
-        reject(err);
+    database.close((error) => {
+      if (error) {
+        console.error('Error closing database:', error);
+        reject(error);
         return;
       }
-      db = null;
+      database = undefined;
       resolve();
     });
   });
@@ -78,6 +78,6 @@ const closeConnection = () => {
 
 module.exports = {
   connect,
-  getDb,
-  closeConnection,
+  getDb: getDatabase,
+  closeConnection
 };

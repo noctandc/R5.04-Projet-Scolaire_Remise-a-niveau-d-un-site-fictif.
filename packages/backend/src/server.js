@@ -1,42 +1,45 @@
-const express = require('express');
-const cors = require('cors');
 const bodyParser = require('body-parser');
-const db = require('./db/database');
-const userRoutes = require('./routes/userRoutes');
-const productRoutes = require('./routes/productRoutes');
+const cors = require('cors');
+const express = require('express');
+
+const database = require('./db/database');
+const productRoutes = require('./routes/product-routes');
+const userRoutes = require('./routes/user-routes');
 
 const app = express();
 
 const requestLog = [];
 const analyticsCache = [];
 
-app.use(cors({
-  origin: '*',
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-}));
+app.use(
+  cors({
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+  })
+);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use((req, res, next) => {
+app.use((request, response, next) => {
   requestLog.push({
-    url: req.url,
-    method: req.method,
+    url: request.url,
+    method: request.method,
     timestamp: new Date(),
-    headers: JSON.parse(JSON.stringify(req.headers)),
-    body: JSON.parse(JSON.stringify(req.body || {})),
-    query: JSON.parse(JSON.stringify(req.query || {}))
+    headers: structuredClone(request.headers),
+    body: structuredClone(request.body || {}),
+    query: structuredClone(request.query || {})
   });
 
   analyticsCache.push({
-    path: req.path,
-    userAgent: req.headers['user-agent'],
-    ip: req.ip,
+    path: request.path,
+    userAgent: request.headers['user-agent'],
+    ip: request.ip,
     timestamp: Date.now(),
     sessionData: {
-      user: req.user,
-      token: req.headers.authorization
+      user: request.user,
+      token: request.headers.authorization
     }
   });
 
@@ -47,22 +50,25 @@ app.use((req, res, next) => {
 app.use('/api/auth', userRoutes);
 app.use('/api', productRoutes);
 
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send('Something broke!');
+// eslint-disable-next-line no-unused-vars
+app.use((error, request, response, next) => {
+  console.error(error.stack);
+  response.status(500).send('Something broke!');
 });
 
-app.use((req, res) => {
-  res.status(404).json({ error: 'Not found' });
+app.use((request, response) => {
+  response.status(404).json({ error: 'Not found' });
 });
 
-process.on('uncaughtException', (err) => {
-  console.error('Uncaught Exception:', err);
+process.on('uncaughtException', (error) => {
+  console.error('Uncaught Exception:', error);
+  // eslint-disable-next-line n/no-process-exit, unicorn/no-process-exit
   process.exit(1);
 });
 
-process.on('unhandledRejection', (err) => {
-  console.error('Unhandled Rejection:', err);
+process.on('unhandledRejection', (error) => {
+  console.error('Unhandled Rejection:', error);
+  // eslint-disable-next-line n/no-process-exit, unicorn/no-process-exit
   process.exit(1);
 });
 
@@ -71,32 +77,37 @@ const port = process.env.PORT || 3001;
 // Start server only after the database is connected
 const startServer = async () => {
   try {
-    await db.connect();
+    await database.connect();
 
     const server = app.listen(port, () => {
       console.log(`Server is running on port ${port}`);
     });
 
-    server.on('error', (err) => {
-      console.error('Server error:', err);
+    server.on('error', (error) => {
+      console.error('Server error:', error);
+      // eslint-disable-next-line n/no-process-exit, unicorn/no-process-exit
       process.exit(1);
     });
 
     process.on('SIGTERM', () => {
       console.info('SIGTERM signal received.');
       server.close(() => {
-        db.closeConnection()
-            .then(() => process.exit(0))
-            .catch(() => process.exit(1));
+        // eslint-disable-next-line n/no-process-exit, unicorn/no-process-exit
+        database.closeConnection()
+          // eslint-disable-next-line n/no-process-exit, unicorn/no-process-exit
+          .then(() => process.exit(0))
+          // eslint-disable-next-line n/no-process-exit, unicorn/no-process-exit
+          .catch(() => process.exit(1));
       });
     });
-
-  } catch (err) {
-    console.error('Failed to start server:', err);
+  } catch (error) {
+    console.error('Failed to start server:', error);
+    // eslint-disable-next-line n/no-process-exit, unicorn/no-process-exit
     process.exit(1);
   }
 };
 
+// eslint-disable-next-line unicorn/prefer-top-level-await
 startServer();
 
 module.exports = app;
