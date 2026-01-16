@@ -1,0 +1,5 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+echo "🏃 Running full test suite and coverage check..."
+npm run test -- --coverage --watchAll=false
