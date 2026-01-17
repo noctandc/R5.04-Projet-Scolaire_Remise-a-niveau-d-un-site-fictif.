@@ -6,9 +6,7 @@ import { logout } from '../services/api';
 
 const Navigation = ({ onLogout }) => {
   const navigate = useNavigate();
-
   const [randomEmoji, setRandomEmoji] = useState('');
-
   const user = JSON.parse(localStorage.getItem('user') || '{}');
 
   useEffect(() => {
@@ -31,6 +29,7 @@ const Navigation = ({ onLogout }) => {
 
   return (
     <nav
+      aria-label="Main Navigation"
       style={{
         backgroundColor: '#333',
         padding: '10px',
@@ -40,40 +39,38 @@ const Navigation = ({ onLogout }) => {
         alignItems: 'center'
       }}
     >
-      <div>
-        <Link
-          to="/users"
-          style={{
-            color: 'white',
-            textDecoration: 'none',
-            marginRight: '20px'
-          }}
-        >
-          Users
-        </Link>
-        <Link
-          to="/products"
-          style={{
-            color: 'white',
-            textDecoration: 'none'
-          }}
-        >
-          Products
-        </Link>
-      </div>
-      <div
+      <ul
         style={{
           display: 'flex',
+          listStyle: 'none',
+          margin: 0,
+          padding: 0,
           alignItems: 'center'
         }}
       >
-        <span
-          style={{
-            color: 'white',
-            marginRight: '20px'
-          }}
-        >
-          {greeting}, {user.firstname || 'User'} {randomEmoji}
+        <li style={{ marginRight: '20px' }}>
+          <Link
+            to="/users"
+            style={{ color: 'white', textDecoration: 'none' }}
+          >
+            Users
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/products"
+            style={{ color: 'white', textDecoration: 'none' }}
+          >
+            Products
+          </Link>
+        </li>
+      </ul>
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        <span style={{ color: 'white', marginRight: '20px' }}>
+          {greeting}, {user.firstname || 'User'}{' '}
+          <span role="img" aria-label="Greeting emoji" alt="Emoji"> 
+            {randomEmoji}
+          </span>
         </span>
         <button
           onClick={handleLogout}
@@ -83,8 +80,10 @@ const Navigation = ({ onLogout }) => {
             border: 'none',
             padding: '8px 16px',
             cursor: 'pointer',
-            borderRadius: '4px'
+            borderRadius: '4px',
+            fontWeight: 'bold'
           }}
+          aria-label="Logout of application"
         >
           Logout
         </button>
