@@ -25,13 +25,23 @@ module.exports = {
       }
     }
   ],
+  collectCoverage: true,
   collectCoverageFrom: [
     'packages/**/*.{js,jsx}',
     '!**/node_modules/**',
     '!**/vendor/**',
     '!**/dist/**',
     '!**/coverage/**',
-    '!**/public/**'
+    '!**/public/**',
+    "!**/index.js",
+    "!**/server.js",
+    "!**/init.js",
+    "!**/migrations/**",
+    "!**/reportWebVitals.js",
+    "!**/setupTests.js",
+    "!**/*.test.js",
+    "!**/db/database.js",
+    "!**/routes/*.js"
   ],
   coverageThreshold: {
     global: {

@@ -88,7 +88,7 @@ Remember to make Prettier and ESLint work together!
 ### 3. Testing Implementation
 
 - [Fait] Configure Jest for both packages
-- [En cours] Implement test coverage reporting with minimum thresholds:
+- [Fait] Implement test coverage reporting with minimum thresholds:
   - Statements: 80%
   - Branches: 60%
   - Functions: 70%
