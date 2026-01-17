@@ -93,12 +93,12 @@ Remember to make Prettier and ESLint work together!
   - Branches: 60%
   - Functions: 70%
   - Lines: 80%
-- [En cours] Frontend Tests:
+- [Fait] Frontend Tests:
   - Unit tests for all components
   - Integration tests for forms
   - Mock API calls
   - Test authentication flow
-- [En cours] Backend Tests:
+- [Fait] Backend Tests:
   - Unit tests for controllers
   - Integration tests for API endpoints
   - Database operation tests
