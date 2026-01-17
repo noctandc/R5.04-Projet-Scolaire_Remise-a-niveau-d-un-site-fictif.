@@ -65,7 +65,9 @@ const AddProduct = () => {
           gap: '15px'
         }}
       >
+        <label htmlFor="product-name">Product Name</label>
         <input
+          id="product-name"
           type="text"
           placeholder="Product Name"
           value={name}
@@ -77,7 +79,9 @@ const AddProduct = () => {
           }}
         />
 
+        <label htmlFor="product-price">Price</label>
         <input
+          id="product-price"
           type="number"
           placeholder="Price"
           value={price}
@@ -89,7 +93,9 @@ const AddProduct = () => {
           }}
         />
 
+        <label htmlFor="product-stock">Stock</label>
         <input
+        id="product-stock"
           type="number"
           placeholder="Stock"
           value={stock}
@@ -114,6 +120,7 @@ const AddProduct = () => {
               borderRadius: '4px',
               cursor: 'pointer'
             }}
+            aria-label='Cancel'
           >
             Cancel
           </button>
@@ -129,6 +136,7 @@ const AddProduct = () => {
               borderRadius: '4px',
               cursor: 'pointer'
             }}
+            aria-label='Add Product'
           >
             Add Product
           </button>

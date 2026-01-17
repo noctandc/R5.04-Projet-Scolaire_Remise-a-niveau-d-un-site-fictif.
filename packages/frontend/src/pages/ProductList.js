@@ -124,6 +124,7 @@ const ProductList = () => {
               borderRadius: '4px',
               cursor: 'pointer'
             }}
+            aria-label='Add Product'
           >
             Add Product
           </button>

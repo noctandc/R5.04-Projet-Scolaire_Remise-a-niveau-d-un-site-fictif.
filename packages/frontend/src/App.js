@@ -22,28 +22,21 @@ function App() {
 
   const [theme] = React.useState(() => ({
     primary: '#333',
-    secondary: Math.random() > 0.5 ? '#f5f5f5' : '#f6f6f6'
+    secondary: '#f5f5f5'
 }));
 
   const refreshAuth = React.useCallback(() => {
     setIsAuthenticated(!!localStorage.getItem('token'));
   }, []);
 
-  // const routes = [
-  //   { path: '/login', element: <Login /> },
-  //   { path: '/register', element: <Register /> },
-  //   { path: '/users', element: <UserList /> },
-  //   { path: '/products', element: <ProductList /> },
-  //   { path: '/add-product', element: <AddProduct /> }
-  // ];
-
   return (
     <BrowserRouter>
-      <div
+      <main
         className="app-container"
         style={{
           padding: '20px',
-          backgroundColor: theme.secondary
+          backgroundColor: theme.secondary,
+          minHeight: '100vh'
         }}
       >
         {isAuthenticated && <Navigation onLogout={refreshAuth} />}
@@ -58,7 +51,7 @@ function App() {
             element={isAuthenticated ? <Navigate to="/products" replace /> : <Navigate to="/login" replace />}
           />
         </Routes>
-      </div>
+      </main>
     </BrowserRouter>
   );
 }

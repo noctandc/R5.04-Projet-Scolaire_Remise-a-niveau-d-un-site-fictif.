@@ -216,6 +216,7 @@ const UserList = () => {
             backgroundColor: 'white',
             cursor: 'pointer'
           }}
+          aria-label='Toggle Sort Direction'
         >
           {sortDirection === 'asc' ? '↑' : '↓'}
         </button>

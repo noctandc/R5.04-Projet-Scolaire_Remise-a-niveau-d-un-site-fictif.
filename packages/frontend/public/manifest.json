@@ -1,0 +1,9 @@
+{
+  "short_name": "App",
+  "name": "Product Management System",
+  "icons": [],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#333333",
+  "background_color": "#f5f5f5"
+}
