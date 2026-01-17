@@ -106,8 +106,8 @@ Remember to make Prettier and ESLint work together!
 
 ### 4. Performance Analysis
 
-- [ ] Implement Google Lighthouse CI
-- [ ] Create npm script for running Lighthouse
+- [Fait] Implement Google Lighthouse CI
+- [Fait] Create npm script for running Lighthouse
 - [ ] Set minimum score thresholds:
   - Performance: 80
   - Accessibility: 100
