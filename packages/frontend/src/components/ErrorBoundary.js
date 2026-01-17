@@ -46,6 +46,7 @@ class ErrorBoundary extends React.Component {
               borderRadius: '4px',
               cursor: 'pointer'
             }}
+            aria-label='Reload Page'
           >
             Reload Page
           </button>

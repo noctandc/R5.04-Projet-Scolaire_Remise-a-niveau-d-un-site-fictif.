@@ -118,6 +118,7 @@ const Register = () => {
             borderRadius: '4px',
             cursor: 'pointer'
           }}
+          aria-label='Register'
         >
           Register
         </button>
