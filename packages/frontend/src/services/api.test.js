@@ -1,5 +1,6 @@
 /* eslint-env jest */
 import axios from 'axios';
+
 import * as api from './api';
 
 jest.mock('axios');

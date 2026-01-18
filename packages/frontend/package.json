@@ -5,7 +5,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --passWithNoTests",
-    "lint": "echo \"No lint specified\" && exit 0"
+    "lint": "eslint src/**/*.{js,jsx} --max-warnings 0"
   },
   "dependencies": {
     "axios": "^1.12.2",
@@ -28,5 +28,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.23",
+    "eslint-plugin-tailwindcss": "^3.18.2",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.18"
   }
 }
