@@ -1,32 +1,33 @@
-:root {
-  color-scheme: light;
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #1e40af;
+  --color-surface: #f5f5f5;
+  --color-text-main: #212121;
+  --color-danger: #b71c1c;
 }
 
-body {
-  margin: 0;
-  padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-  background-color: #f5f5f5;
-  color: #212121;
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  body {
+    @apply m-0 p-0 bg-[--color-surface] text-[--color-text-main] antialiased;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  }
+
+  #root {
+    @apply min-h-screen;
+  }
 }
 
-#root {
-  min-height: 100vh;
-}
+@layer components {
+  .loading {
+    @apply flex h-screen w-screen items-center justify-center text-[--color-text-main] text-[1.2em];
+  }
 
-.loading {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  width: 100vw;
-  color: #212121; 
-  font-size: 1.2em;
-}
-
-.error {
-  color: #b71c1c;
-  text-align: center;
-  padding: 20px;
-  font-weight: bold;
+  .error {
+    @apply p-5 text-center font-bold text-[--color-danger];
+  }
 }
