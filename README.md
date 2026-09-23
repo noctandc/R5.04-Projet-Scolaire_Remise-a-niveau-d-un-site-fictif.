@@ -3,7 +3,7 @@ Ce projet est une plateforme e-commerce dont la base de code a été modernisée
 
 ## État du Projet
 
-L'intégralité des exigences principales a été remplie, avec une attention particulière portée à l'automatisation et à la couverture de tests.
+L'intégralité des exigences principales a été remplie, portée à l'automatisation et à la couverture de tests.
 
 | Catégorie | État | Détails |
 | :--- | :---: | :--- |
