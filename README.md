@@ -1,4 +1,4 @@
-# R5.04-FinalProject
+# R5.04-Projet Scolaire - Remise à niveau d'un site fictif
 Ce projet est une plateforme e-commerce dont la base de code a été modernisée pour répondre aux standards industriels de qualité, de test et de performance.
 
 ## État du Projet
